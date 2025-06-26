@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { usersAPI, type TUser } from "../../Features/Users/usersAPI";
+import { usersAPI, type TUser } from "../../../Features/Users/usersAPI";
 
 type ChangeRoleProps = {
     user: TUser | null;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router";
 import { usersAPI } from "../../Features/Users/usersAPI";
 import { logout } from "../../Features/Login/UserSlice";
-import UpdateProfile from "../ManageUsers/UpdateProfile";
+import UpdateProfile from "./ManageUsers/UpdateProfile";
 
 // import UpdateProfile from "./manageUsers/UpdateProfile";
 

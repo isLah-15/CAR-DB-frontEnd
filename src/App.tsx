@@ -43,15 +43,12 @@ function App() {
       path: '/dashboard',
       element: <Dashboard />,
       children: [
-        {
-          path: 'main',
-          element: <h1>Analytics</h1>
-        },
-        
         // {
-        //   path: 'profile',
+        //   path: 'main',
         //   element: <h1>Analytics</h1>
-        // }
+        // },
+        
+      
       ]
     },
     {
