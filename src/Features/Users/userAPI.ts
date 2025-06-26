@@ -15,8 +15,8 @@ export type TUser = {
 
 }
 
-export const usersAPI = createApi({ // sets up API endpoints for user management - creating users and verifying them etc
-    reducerPath: 'usersAPI', // this is the key in the store where the API state will be stored - name of the API in the store
+export const userAPI = createApi({ // sets up API endpoints for user management - creating users and verifying them etc
+    reducerPath: 'userAPI', // this is the key in the store where the API state will be stored - name of the API in the store
     baseQuery: fetchBaseQuery({
         baseUrl: ApiDomain, // base URL for the API - this is the domain where the API is hosted
         prepareHeaders: (headers, { getState }) => {

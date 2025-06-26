@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'sonner';
-import { usersAPI } from '../../Features/Users/usersAPI';
+import { userAPI } from '../../Features/Users/userAPI';
 
 
 type VerifyInputs = {
@@ -24,7 +24,7 @@ const VerifyUser = () => {
     const location = useLocation();
     const emailFromState = location.state?.email || '';
 
-    const [verifyUser, { isLoading }] = usersAPI.useVerifyUserMutation();
+    const [verifyUser, { isLoading }] = userAPI.useVerifyUserMutation();
     const {
         register,
         handleSubmit,

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 
-import { usersAPI, type TUser } from "../../../Features/Users/usersAPI";
+import { userAPI, type TUser } from "../../../Features/Users/userAPI";
 import ChangeRole from "./ChangeRole";
 
 const Users = () => {
-    const { data: usersData, isLoading, error } = usersAPI.useGetUsersQuery(
+    const { data: usersData, isLoading, error } = userAPI.useGetUsersQuery(
         undefined, // No parameters needed for this query
         {
             refetchOnMountOrArgChange: true, // Refetch data when component mounts or arguments change

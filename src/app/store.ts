@@ -4,7 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 
-import { usersAPI } from '../Features/Users/usersAPI'
+import { userAPI } from '../Features/Users/userAPI'
 import UserSlice from '../Features/Login/UserSlice'
 import { loginAPI } from '../Features/Login/LoginApi'
 
@@ -20,7 +20,7 @@ const persistConfig = {
 // a reducer is a function that takes the current state and an action, and returns a new state i.e for user, usersAPI, loginAPI
 
 const rootReducer = combineReducers({ //combining all reducers into one root reducer
-    [usersAPI.reducerPath]: usersAPI.reducer,
+    [userAPI.reducerPath]: userAPI.reducer,
     [loginAPI.reducerPath]: loginAPI.reducer,
     
     user: UserSlice
@@ -35,7 +35,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false // disable serializable check for the persisted state - A serializable value is a value that can be converted to JSON and back without losing information. Its desabled here because the RTK Query APIs use non-serializable values (like functions) in their state.
     })
-        .concat(usersAPI.middleware) // add the usersAPI middleware to the store - helps with caching, invalidation, polling, and other features
+        .concat(userAPI.middleware) // add the usersAPI middleware to the store - helps with caching, invalidation, polling, and other features
         .concat(loginAPI.middleware) // add the loginAPI middleware
 
 })

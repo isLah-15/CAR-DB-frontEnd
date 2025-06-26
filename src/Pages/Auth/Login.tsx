@@ -43,26 +43,30 @@ function Login() {
 
 
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
-        console.log('Login data:', data);
+    try {
+        const response = await loginUser(data).unwrap();
+        
+        // Save to Redux
+        dispatch(loginSuccess(response));
 
-        try {
-            const response = await loginUser(data).unwrap()
-            dispatch(loginSuccess(response))
+        // Save to localStorage
+        localStorage.setItem("gearUser", JSON.stringify(response));
 
-            console.log("Login response:", response);
-            toast.success("Login successful!");
+        toast.success("Login successful!");
 
-            if (response.user.role === 'admin') {
-                navigate('/admin/dashboard');
-            } else if (response.user.role === 'user') {
-                navigate('/user/dashboard');
-            }
-
-        } catch (error) {
-            console.log("Login error:", error);
-            toast.error("Login failed. Please check your credentials and try again.");
+        if (response.user.role === 'admin') {
+            navigate('/admin/dashboard');
+        } else if (response.user.role === "customer") {
+            navigate('/user/dashboard');
+        } else {
+            navigate("/");
         }
+
+    } catch (error) {
+        toast.error("Login failed. Please check your credentials and try again.");
     }
+};
+
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-zinc-900 via-amber-800 to-yellow-900 font-mono">

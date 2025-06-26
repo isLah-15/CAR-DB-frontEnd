@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { usersAPI } from "../../../Features/Users/usersAPI";
+import { userAPI } from "../../../Features/Users/userAPI";
 
 type UpdateProfileInputs = {
     firstName: string;
@@ -31,7 +31,7 @@ interface UpdateProfileProps {
 }
 
 const UpdateProfile = ({ user, refetch }: UpdateProfileProps) => {
-    const [updateUser, { isLoading }] = usersAPI.useUpdateUserMutation(
+    const [updateUser, { isLoading }] = userAPI.useUpdateUserMutation(
         { fixedCacheKey: "updateUser" }
     );
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import UpdateProfile from "../AdminDashboard/manageUsers/UpdateProfile";
 import { useNavigate } from "react-router";
-import { usersAPI } from "../../Features/Users/usersAPI";
+import { userAPI } from "../../Features/Users/userAPI";
 import { logout } from "../../Features/Login/UserSlice";
 import UpdateProfile from "../AdminDashboard/ManageUsers/UpdateProfile";
 
@@ -15,7 +15,7 @@ const UserProfile = () => {
     const user = useSelector((state: RootState) => state.user);
     const user_id = user.user?.user_id;
 
-    const { data, isLoading, error, refetch } = usersAPI.useGetUserByIdQuery(user_id ?? 0, {
+    const { data, isLoading, error, refetch } = userAPI.useGetUserByIdQuery(user_id ?? 0, {
         skip: !user_id, // Skip the query if user_id is not available
     });
 

@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { usersAPI, type TUser } from "../../../Features/Users/usersAPI";
+import { userAPI, type TUser } from "../../../Features/Users/userAPI";
 
 type ChangeRoleProps = {
     user: TUser | null;
@@ -19,7 +19,7 @@ const schema = yup.object({
 });
 
 const ChangeRole = ({ user }: ChangeRoleProps) => {
-    const [updateUser, { isLoading }] = usersAPI.useUpdateUserMutation(
+    const [updateUser, { isLoading }] = userAPI.useUpdateUserMutation(
         { fixedCacheKey: "updateUser" }
     );
 

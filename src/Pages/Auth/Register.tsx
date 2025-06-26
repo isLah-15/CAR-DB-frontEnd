@@ -3,9 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router';
-import { usersAPI } from '../../Features/Users/usersAPI';
-
-
+import { userAPI } from '../../Features/Users/userAPI';
+;
 
 
 type RegisterInputs = {
@@ -33,7 +32,7 @@ const schema = yup.object({
 
 function Register() {
     const navigate = useNavigate();
-    const [createUser, { isLoading }] = usersAPI.useCreateUsersMutation(
+    const [createUser, { isLoading }] = userAPI.useCreateUsersMutation(
         { fixedCacheKey: 'createUser' } // Ensures the mutation is not re-fetched unnecessarily
     )
 
