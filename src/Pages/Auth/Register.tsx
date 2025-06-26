@@ -2,11 +2,16 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import {toast} from 'react-toastify';
+
+import { usersAPI } from '../../Features/Users/usersAPI';
+import { useNavigate } from 'react-router';
+
 type RegisterInputs = {
     firstName: string;
     lastName: string;
     email: string;
-    phoneNumber: string;
+    phone: string;
     address: string;
     password: string;
     confirmPassword: string;
@@ -16,7 +21,7 @@ const schema = yup.object({
     firstName: yup.string().max(50, 'Max 50 characters').required('First name is required'),
     lastName: yup.string().max(50, 'Max 50 characters').required('Last name is required'),
     email: yup.string().email('Invalid email').max(100, 'Max 100 characters').required('Email is required'),
-    phoneNumber: yup.string().max(50, 'Max 50 characters').required('PhoneNumber is required'),
+    phone: yup.string().max(50, 'Max 50 characters').required('PhoneNumber is required'),
     address: yup.string().max(50, 'Max 100 characters').required('address is required'),
     password: yup.string().min(6, 'Min 6 characters').max(255, 'Max 255 characters').required('Password is required'),
     confirmPassword: yup
@@ -26,6 +31,11 @@ const schema = yup.object({
 });
 
 function Register() {
+    const navigate = useNavigate();
+    const [createUser, { isLoading }] = usersAPI.useCreateUsersMutation(
+        { fixedCacheKey: 'createUser' } // Ensures the mutation is not re-fetched unnecessarily
+    )
+
     const {
         register,
         handleSubmit,
@@ -34,9 +44,23 @@ function Register() {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<RegisterInputs> = (data) => {
-        const { ...userData } = data;
-        console.log(userData);
+    const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
+        console.log(data);
+        try {
+            const response = await createUser(data).unwrap()
+            console.log("response here...", response);
+            toast.success("Registration successful! Please check your email to verify your account.");
+            // Redirect to verification page or login page
+            setTimeout(() => {
+                navigate('/verify', {
+                    state: { email: data.email }
+                });
+            }, 2000);
+        } catch (error) {
+            console.log("Error", error);
+
+        }
+
     };
 
     return (
@@ -79,12 +103,12 @@ function Register() {
 
                     <input
                         type="number"
-                        {...register('phoneNumber')}
+                        {...register('phone')}
                         placeholder="Phone Number"
                         className='input w-full p-2 bg-zinc-900 text-yellow-100 border border-yellow-700 focus:ring-2 focus:ring-amber-400 rounded shadow'
                     />
-                    {errors.phoneNumber && (
-                        <span className="text-red-500 text-sm">{errors.phoneNumber.message}</span>
+                    {errors.phone && (
+                        <span className="text-red-500 text-sm">{errors.phone.message}</span>
                     )}
 
                     <input
@@ -117,9 +141,14 @@ function Register() {
                         <span className="text-red-500 text-sm">{errors.confirmPassword.message}</span>
                     )}
 
-                    <button type="submit" className="btn bg-amber-700 hover:bg-amber-600 text-white font-bold w-full mt-4">
-                        Register
+                    <button type="submit" className="btn bg-amber-700 hover:bg-amber-600 text-white font-bold w-full mt-4" disabled={isLoading}>
+                        {isLoading ? (
+                            <>
+                                <span className="loading loading-spinner text-primary" /> Registering...
+                            </>
+                        ) : "Register"}
                     </button>
+
                 </form>
 
                 <p className="mt-6 text-center text-yellow-200">

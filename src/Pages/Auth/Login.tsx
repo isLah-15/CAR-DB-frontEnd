@@ -1,6 +1,14 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useLocation, useNavigate } from 'react-router';
+
+import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../Features/Login/UserSlice';
+import { loginAPI } from '../../Features/Login/LoginApi';
+
+
 
 type LoginInputs = {
     email: string;
@@ -13,18 +21,48 @@ const schema = yup.object({
 });
 
 function Login() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
+
+    const emailFromState = location.state?.email || ''
+
+    const [loginUser, { isLoading }] = loginAPI.useLoginUserMutation()
+
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginInputs>({
         resolver: yupResolver(schema),
+        defaultValues: {
+            email: emailFromState,
+        }
     });
 
-    const onSubmit: SubmitHandler<LoginInputs> = (data) => {
+
+    const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
         console.log('Login data:', data);
-        // TO API
-    };
+
+        try {
+            const response = await loginUser(data).unwrap()
+            dispatch(loginSuccess(response))
+
+            console.log("Login response:", response);
+            toast.success("Login successful!");
+
+            if (response.user.role === 'admin') {
+                navigate('/admin/dashboard');
+            } else if (response.user.role === 'user') {
+                navigate('/user/dashboard');
+            }
+
+        } catch (error) {
+            console.log("Login error:", error);
+            toast.error("Login failed. Please check your credentials and try again.");
+        }
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-zinc-900 via-amber-800 to-yellow-900 font-mono">
@@ -55,8 +93,13 @@ function Login() {
                         <span className="text-sm text-red-500">{errors.password.message}</span>
                     )}
 
-                    <button type="submit" className="btn bg-amber-700 hover:bg-amber-600 text-white font-bold w-full mt-4">
-                        Login
+
+                    <button type="submit" className="btn bg-amber-700 hover:bg-amber-600 text-white font-bold w-full mt-4" disabled={isLoading}>
+                        {isLoading ? (
+                            <>
+                                <span className="loading loading-spinner text-primary" /> Logining...
+                            </>
+                        ) : "Login"}
                     </button>
                 </form>
 

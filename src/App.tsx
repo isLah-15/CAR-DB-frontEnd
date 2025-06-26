@@ -5,10 +5,11 @@ import './App.css'
 import LandingPage from './Pages/Landing'
 import AboutPage from './Pages/AboutPage'
 import Dashboard from './Pages/Dashboard'
-import Register from './Pages/Register'
-import Login from './Pages/Login'
+import Register from './Pages/Auth/Register'
+import Login from './Pages/Auth/Login'
 import ServicesPage from './Pages/ServicesPage'
 import Error from './Pages/Error'
+import VerifyUser from './Pages/Auth/VerifyPage'
 
 
 
@@ -33,6 +34,10 @@ function App() {
      {
       path: '/services',
       element: <ServicesPage/>
+    },
+    {
+      path: '/verify',
+      element: <VerifyUser />
     },
     {
       path: '/dashboard',
