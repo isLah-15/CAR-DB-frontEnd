@@ -1,11 +1,12 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
 import {toast} from 'react-toastify';
-
-import { usersAPI } from '../../Features/Users/usersAPI';
 import { useNavigate } from 'react-router';
+import { usersAPI } from '../../Features/Users/usersAPI';
+
+
+
 
 type RegisterInputs = {
     firstName: string;
