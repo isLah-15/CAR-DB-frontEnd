@@ -50,14 +50,15 @@ export const userAPI = createApi({ // sets up API endpoints for user management 
         }),
         getUsers: builder.query<TUser[], void>({
             query: () => '/users',
+            transformResponse: (response: { data: TUser[] }) => response.data, // transform the response to return only the users array
             providesTags: ['Users']
         }),
         // update user
-        updateUser: builder.mutation<TUser, Partial<TUser> & { id: number }>({
-            query: (user) => ({
-                url: `/user/${user.id}`,
+        updateUser: builder.mutation<TUser, Partial<TUser> & { id: number  }>({
+            query: (customer) => ({
+                url: `/user/${customer.id}`,
                 method: 'PUT',
-                body: user,
+                body: customer,
             }),
             invalidatesTags: ['Users']
         }),

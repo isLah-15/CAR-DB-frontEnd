@@ -45,6 +45,8 @@ function Login() {
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     try {
         const response = await loginUser(data).unwrap();
+
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaa ", response)
         
         // Save to Redux
         dispatch(loginSuccess(response));
@@ -54,10 +56,10 @@ function Login() {
 
         toast.success("Login successful!");
 
-        if (response.user.role === 'admin') {
-            navigate('/admin/dashboard');
-        } else if (response.user.role === "customer") {
+        if (response.user.role === 'customer') {
             navigate('/user/dashboard');
+        } else if (response.user.role === "admin") {
+            navigate('/admin/dashboard');
         } else {
             navigate("/");
         }
