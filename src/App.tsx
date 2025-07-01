@@ -16,6 +16,10 @@ import UserProfile from './Dashboard/UserDashboard/UserProfile'
 
 import { useSelector } from 'react-redux'
 import type { RootState } from './app/store'
+import Cars from './Dashboard/AdminDashboard/Cars/Cars'
+// import UserCars from './Dashboard/UserDashboard/Cars/UserCar'
+import { Toaster } from 'sonner'
+import UserCars from './Dashboard/UserDashboard/Cars/UserCar'
 
 function App() {
   const user = useSelector((state: RootState) => state.user.user)
@@ -36,6 +40,7 @@ function App() {
         { path: 'analytics', element: <h1>Analytics</h1> },
         { path: 'users', element: <Users /> },
         { path: 'profile', element: <Profile /> },
+        { path: 'cars', element: <Cars /> }
       ]
     },
 
@@ -46,13 +51,26 @@ function App() {
       children: [
         { path: 'analytics', element: <h1>Analytics</h1> },
         { path: 'profile', element: <UserProfile /> },
+        { path: 'cars', element: <UserCars /> }
       ]
     },
 
     { path: '*', element: <Error /> },
   ])
 
-  return <RouterProvider router={router} />
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster position='top-right' toastOptions={{
+        classNames: {
+          error: 'bg-red-500 text-white',
+          success: 'bg-green-500 text-white',
+          info: 'bg-blue-500 text-white',
+        }
+
+      }} />
+    </>
+  )
 }
 
 export default App

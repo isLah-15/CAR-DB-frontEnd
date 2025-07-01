@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage'
 import { userAPI } from '../Features/Users/userAPI'
 import UserSlice from '../Features/Login/UserSlice'
 import { loginAPI } from '../Features/Login/LoginApi'
+import { carApi } from '../Features/CarFeature/CarAPI'
 
 
 
@@ -22,7 +23,7 @@ const persistConfig = {
 const rootReducer = combineReducers({ //combining all reducers into one root reducer
     [userAPI.reducerPath]: userAPI.reducer,
     [loginAPI.reducerPath]: loginAPI.reducer,
-    
+    [carApi.reducerPath]: carApi.reducer,
     user: UserSlice
 })
 
@@ -37,6 +38,7 @@ export const store = configureStore({
     })
         .concat(userAPI.middleware) // add the usersAPI middleware to the store - helps with caching, invalidation, polling, and other features
         .concat(loginAPI.middleware) // add the loginAPI middleware
+        .concat(carApi.middleware) // add the CarAPI middleware
 
 })
 

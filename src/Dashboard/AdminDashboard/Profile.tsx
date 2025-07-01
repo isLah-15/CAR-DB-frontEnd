@@ -15,6 +15,7 @@ const Profile = () => {
     const navigate = useNavigate()
     const user = useSelector((state: RootState) => state.user);
     const user_id = user.user?.user_id;
+    console.log('user id', user_id)
 
     const { data, isLoading, error, refetch } = userAPI.useGetUserByIdQuery(user_id ?? 0, {
         skip: !user_id, // Skip the query if user_id is not available

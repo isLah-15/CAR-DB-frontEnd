@@ -63,7 +63,8 @@ export const userAPI = createApi({ // sets up API endpoints for user management 
             invalidatesTags: ['Users']
         }),
         getUserById: builder.query<TUser, number>({
-            query: (id) => `/user/${id}`,
+            query: (id) => `/customer/${id}`,
+            transformResponse: (response: { data: TUser }) => response.data, 
         }),
 
     })

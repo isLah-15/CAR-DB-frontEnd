@@ -1,6 +1,6 @@
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
-// import { FaTasks } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa6";
+import { FaCar } from "react-icons/fa6";
 
 
 export type DrawerData = {
@@ -12,12 +12,12 @@ export type DrawerData = {
 
 export const userDrawerData: DrawerData[] = [
     
-    // {
-    //     id: "todos",
-    //     name: "Todos",
-    //     icon: FaTasks,
-    //     link: "todos"
-    // },
+    {
+            id: "cars",
+            name: "Cars",
+            icon: FaCar,
+            link: "cars"
+        },
     {
         id: "profile",
         name: "Profile",

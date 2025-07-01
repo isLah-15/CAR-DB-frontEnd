@@ -17,66 +17,61 @@ const Users = () => {
     const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
 
     return (
-        <div>
+    <div>
 
-            {/* Change Role Modal */}
-            <ChangeRole user={selectedUser} />
+        {/* Change Role Modal */}
+        <ChangeRole user={selectedUser} />
 
-            {/* Display Users */}
-            {isLoading && <p>Loading users...</p>}
-            {error && <p className="text-red-500">Error fetching users</p>}
-            {usersData && usersData.length > 0 ? (
-                <div className="overflow-x-auto">
-                    <table className="table table-xs">
-                        <thead>
-                            <tr className="bg-gray-600 text-white text-md lg:text-lg">
-
-                                <th className="px-4 py-2">First Name</th>
-                                <th className="px-4 py-2">Last Name</th>
-                                <th className="px-4 py-2">Email</th>
-                                <th className="px-4 py-2">Role</th>
-                                <th className="px-4 py-2">Verified</th>
-                                <th className="px-4 py-2">Actions</th>
+        {/* Display Users */}
+        {isLoading && <p className="text-yellow-200 italic">Loading users...</p>}
+        {error && <p className="text-red-500 font-bold">Error fetching users</p>}
+        {usersData && usersData.length > 0 ? (
+            <div className="overflow-x-auto border-2 border-yellow-700 rounded-xl shadow-[0_0_25px_rgba(255,255,0,0.15)] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 p-4">
+                <table className="table table-xs text-yellow-100 w-full">
+                    <thead>
+                        <tr className="bg-yellow-800 text-black text-md lg:text-lg uppercase tracking-wider border-b-2 border-yellow-600">
+                            <th className="px-4 py-3">First Name</th>
+                            <th className="px-4 py-3">Last Name</th>
+                            <th className="px-4 py-3">Email</th>
+                            <th className="px-4 py-3">Role</th>
+                            <th className="px-4 py-3">Verified</th>
+                            <th className="px-4 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {usersData.map((user: TUser) => (
+                            <tr key={user.id} className="hover:bg-yellow-900 border-b border-yellow-700 transition-all duration-150 ease-in-out">
+                                <td className="px-4 py-2 border-r border-yellow-700 lg:text-base">{user.firstName}</td>
+                                <td className="px-4 py-2 border-r border-yellow-700 lg:text-base">{user.lastName}</td>
+                                <td className="px-4 py-2 border-r border-yellow-700 lg:text-base">{user.email}</td>
+                                <td className="px-4 py-2 border-r border-yellow-700 lg:text-base">{user.role}</td>
+                                <td className="px-4 py-2 border-r border-yellow-700 lg:text-base">
+                                    <span className={`badge px-3 py-1 rounded-full text-xs font-bold ${user.isVerified ? "bg-green-700 text-white" : "bg-yellow-600 text-black"}`}>
+                                        {user.isVerified ? "Verified" : "Not Verified"}
+                                    </span>
+                                </td>
+                                <td className="px-4 py-2">
+                                    <button
+                                        className="btn btn-sm bg-yellow-700 hover:bg-yellow-600 text-black border border-yellow-500 font-bold uppercase tracking-wide"
+                                        onClick={() => {
+                                            setSelectedUser(user);
+                                            (document.getElementById('role_modal') as HTMLDialogElement)?.showModal();
+                                        }}
+                                    >
+                                        Change Role
+                                    </button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {usersData.map((user: TUser) => (
-                                <tr key={user.id} className="hover:bg-gray-300 border-b border-gray-400">
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        ) : (
+            <p className="text-yellow-300 italic">No users found.</p>
+        )}
+    </div>
+);
 
-                                    <td className="px-4 py-2 border-r border-gray-400 lg:text-base">{user.firstName}</td>
-                                    <td className="px-4 py-2 border-r border-gray-400 lg:text-base">{user.lastName}</td>
-                                    <td className="px-4 py-2 border-r border-gray-400 lg:text-base">{user.email}</td>
-                                    <td className="px-4 py-2 border-r border-gray-400 lg:text-base">{user.role}</td>
-                                    <td className="px-4 py-2 border-r border-gray-400 lg:text-base">
-                                        <span className={`badge ${user.isVerified ? "badge-success" : "badge-warning"}`}>
-                                            {user.isVerified ? (
-                                                <span className="text-green-700 lg:text-base">Verified</span>
-                                            ) : (
-                                                <span className="text-yellow-700 lg:text-base">Not Verified</span>
-                                            )}
-                                        </span>
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        <button
-                                            className="btn btn-sm btn-primary text-blue-500"
-                                            onClick={() => {
-                                                setSelectedUser(user);
-                                                (document.getElementById('role_modal') as HTMLDialogElement)?.showModal();
-                                            }}
-                                        >
-                                            Change Role
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            ) : (
-                <p>No users found.</p>
-            )}
-        </div>
-    );
 };
 
 export default Users;
